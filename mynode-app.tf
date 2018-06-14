@@ -44,8 +44,8 @@ resource "aws_autoscaling_group" "node_app_asg" {
 resource "aws_security_group" "node_app_websg" {
   name = "security_group_for_node_app_websg"
   ingress {
-    from_port = 3000
-    to_port = 3000
+    from_port = 5000
+    to_port = 5000
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -58,8 +58,8 @@ resource "aws_security_group" "node_app_websg" {
 resource "aws_security_group" "elbsg" {
   name = "security_group_for_elb"
   ingress {
-    from_port = 3000
-    to_port = 3000
+    from_port = 5000
+    to_port = 5000
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -84,9 +84,9 @@ resource "aws_elb" "elb1" {
   security_groups = ["${aws_security_group.elbsg.id}"]
   
   listener {
-    instance_port = 3000
+    instance_port = 5000
     instance_protocol = "http"
-    lb_port = 3000
+    lb_port = 5000
     lb_protocol = "http"
   }
 
@@ -94,7 +94,7 @@ resource "aws_elb" "elb1" {
     healthy_threshold = 2
     unhealthy_threshold = 2
     timeout = 3
-    target = "HTTP:3000/"
+    target = "HTTP:5000/"
       interval = 30
   }
 
